@@ -141,6 +141,7 @@ const Tickets: React.FC = () => {
       if (filters.dateTo) params.date_to = filters.dateTo;
 
       const response = await apiService.getTickets(params);
+      console.log('Tickets response:', response); // Debug log
       if (response && Array.isArray(response.tickets)) {
         setTickets(response.tickets);
       } else {
