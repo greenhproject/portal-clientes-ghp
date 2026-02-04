@@ -141,8 +141,15 @@ const Tickets: React.FC = () => {
       if (filters.dateTo) params.date_to = filters.dateTo;
 
       const response = await apiService.getTickets(params);
-      setTickets(response.tickets || []);
-      setPagination(response.pagination);
+      if (response && Array.isArray(response.tickets)) {
+        setTickets(response.tickets);
+      } else {
+        console.warn('Respuesta de tickets inválida:', response);
+        setTickets([]);
+      }
+      if (response && response.pagination) {
+        setPagination(response.pagination);
+      }
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al cargar tickets');
     } finally {
@@ -278,7 +285,7 @@ const Tickets: React.FC = () => {
                     </td>
                   </tr>
                 ) : (
-                  tickets.map((ticket) => (
+                  Array.isArray(tickets) && tickets.map((ticket) => (
                     <tr key={ticket.ticket_id}>
                       <td>
                         <Link to={`/tickets/${ticket.ticket_id}`} className="ticket-link">
@@ -346,7 +353,7 @@ const Tickets: React.FC = () => {
                 <p>No se encontraron tickets</p>
               </div>
             ) : (
-              tickets.map((ticket) => (
+              Array.isArray(tickets) && tickets.map((ticket) => (
                 <div key={ticket.ticket_id} className="ticket-card">
                   <div className="ticket-card-header">
                     <Link to={`/tickets/${ticket.ticket_id}`} className="ticket-card-id">
