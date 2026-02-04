@@ -1,0 +1,248 @@
+/* QR Generator Modal */
+.qr-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.qr-modal-content {
+  background: white;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: qrModalSlideIn 0.3s ease-out;
+}
+
+@keyframes qrModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.qr-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.qr-modal-header h2 {
+  font-size: 20px;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.qr-close-btn {
+  background: #f3f4f6;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.qr-close-btn:hover {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+.qr-preview {
+  padding: 24px;
+}
+
+.qr-print-card {
+  border: 2px solid #10b981;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  background: white;
+}
+
+.qr-header h1 {
+  color: #10b981;
+  font-size: 24px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.qr-header p {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.qr-project-id {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.qr-code-container {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.qr-info {
+  text-align: left;
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.qr-info h3 {
+  color: #1f2937;
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.qr-info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.qr-info-item:last-child {
+  border-bottom: none;
+}
+
+.qr-info-label {
+  font-weight: 600;
+  color: #374151;
+  min-width: 90px;
+  font-size: 14px;
+}
+
+.qr-info-value {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.qr-instructions {
+  background: #dbeafe;
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  color: #1e40af;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.qr-modal-actions {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.qr-modal-actions .btn-secondary,
+.qr-modal-actions .btn-primary {
+  flex: 1;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.qr-modal-actions .btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.qr-modal-actions .btn-secondary:hover {
+  background: #e5e7eb;
+}
+
+.qr-modal-actions .btn-primary {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.qr-modal-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+}
+
+@media (max-width: 640px) {
+  .qr-modal-content {
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 95vh;
+  }
+
+  .qr-print-card {
+    padding: 24px;
+  }
+
+  .qr-project-id {
+    font-size: 18px;
+  }
+
+  .qr-code-container svg {
+    width: 180px !important;
+    height: 180px !important;
+  }
+}
+
+@media print {
+  .qr-modal-overlay,
+  .qr-modal-header,
+  .qr-modal-actions {
+    display: none !important;
+  }
+
+  .qr-modal-content {
+    box-shadow: none;
+    max-width: 100%;
+  }
+
+  .qr-preview {
+    padding: 0;
+  }
+
+  .qr-print-card {
+    border: 2px solid #10b981;
+    page-break-inside: avoid;
+  }
+}
+

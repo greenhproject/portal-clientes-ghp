@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Ticket de Soporte - Green House Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: transparent;
+            padding: 20px;
+        }
+
+        .widget-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+        }
+
+        .widget-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .widget-header img {
+            width: 120px;
+            margin-bottom: 16px;
+        }
+
+        .widget-header h1 {
+            font-size: 24px;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .widget-header p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group label .required {
+            color: #ef4444;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+        }
+
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #10b981;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+            .widget-container {
+                padding: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <div class="widget-header">
+            <img src="https://via.placeholder.com/120x120/10b981/ffffff?text=GHP" alt="Green House Project Logo">
+            <h1>Crear Ticket de Soporte</h1>
+            <p>Describe tu problema y nuestro equipo te ayudará</p>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <form id="ticket-form">
+            <div class="form-group">
+                <label>Nombre Completo <span class="required">*</span></label>
+                <input type="text" id="full_name" required placeholder="Tu nombre completo">
+            </div>
+
+            <div class="form-group">
+                <label>Correo Electrónico <span class="required">*</span></label>
+                <input type="email" id="email" required placeholder="tu@email.com">
+            </div>
+
+            <div class="form-group">
+                <label>Teléfono</label>
+                <input type="tel" id="phone" placeholder="+1 234 567 8900">
+            </div>
+
+            <div class="form-group">
+                <label>ID del Proyecto OpenSolar <span class="required">*</span></label>
+                <input type="text" id="project_id" required placeholder="Ej: 8362212">
+            </div>
+
+            <div class="form-group">
+                <label>Título del Problema <span class="required">*</span></label>
+                <input type="text" id="title" required placeholder="Describe brevemente el problema">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Categoría <span class="required">*</span></label>
+                    <select id="category" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option value="Eléctrico">Eléctrico</option>
+                        <option value="Mecánico">Mecánico</option>
+                        <option value="Rendimiento">Rendimiento</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Prioridad <span class="required">*</span></label>
+                    <select id="priority" required>
+                        <option value="">Selecciona prioridad</option>
+                        <option value="low">Baja</option>
+                        <option value="medium">Media</option>
+                        <option value="high">Alta</option>
+                        <option value="critical">Crítica</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Descripción Detallada <span class="required">*</span></label>
+                <textarea id="description" required placeholder="Describe el problema con el mayor detalle posible..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">
+                Enviar Ticket
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // CONFIGURACIÓN - Actualiza esta URL con la URL de tu backend
+        const API_URL = 'https://soporte-backend-ghp-production.up.railway.app/api';
+
+        const form = document.getElementById('ticket-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const alertContainer = document.getElementById('alert-container');
+
+        // Cargar categorías dinámicas desde el backend
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_URL}/settings/categories`);
+                if (response.ok) {
+                    const categories = await response.json();
+                    const categorySelect = document.getElementById('category');
+                    categorySelect.innerHTML = '<option value="">Selecciona una categoría</option>';
+                    categories.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat;
+                        option.textContent = cat;
+                        categorySelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Cargar prioridades dinámicas desde el backend
+        async function loadPriorities() {
+            try {
+                const response = await fetch(`${API_URL}/settings/priorities`);
+                if (response.ok) {
+                    const priorities = await response.json();
+                    const prioritySelect = document.getElementById('priority');
+                    prioritySelect.innerHTML = '<option value="">Selecciona prioridad</option>';
+                    priorities.forEach(priority => {
+                        const option = document.createElement('option');
+                        option.value = priority.value;
+                        option.textContent = priority.label;
+                        prioritySelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading priorities:', error);
+            }
+        }
+
+        // Mostrar alerta
+        function showAlert(message, type = 'info') {
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    ${message}
+                </div>
+            `;
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Manejar envío del formulario
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Deshabilitar botón
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+
+            // Recopilar datos del formulario
+            const formData = {
+                full_name: document.getElementById('full_name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                project_id: document.getElementById('project_id').value,
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                priority: document.getElementById('priority').value,
+                description: document.getElementById('description').value
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/tickets/public`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert(`✅ Ticket creado exitosamente. ID: ${data.ticket_id}`, 'success');
+                    form.reset();
+                } else {
+                    showAlert(`❌ Error: ${data.error || 'No se pudo crear el ticket'}`, 'error');
+                }
+            } catch (error) {
+                showAlert('❌ Error de conexión. Por favor intenta nuevamente.', 'error');
+                console.error('Error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar Ticket';
+            }
+        });
+
+        // Cargar opciones dinámicas al iniciar
+        loadCategories();
+        loadPriorities();
+    </script>
+</body>
+</html>
+

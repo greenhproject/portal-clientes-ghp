@@ -1,0 +1,107 @@
+/**
+ * Estilos Globales - Sistema de Soporte
+ * Green House Project - Apple-inspired Design
+ */
+
+/* Import Design System */
+@import './styles/design-system.css';
+
+/* Legacy color variables for backward compatibility */
+:root {
+  --color-primary: var(--ghp-green-primary);
+  --color-primary-dark: var(--ghp-green-dark);
+  --color-primary-light: #81C784;
+  --color-secondary: var(--ghp-green-darker);
+  
+  --color-success: var(--ghp-success);
+  --color-warning: var(--ghp-warning);
+  --color-error: var(--ghp-error);
+  --color-info: var(--ghp-info);
+  
+  --color-bg: var(--ghp-gray-50);
+  --color-surface: #FFFFFF;
+  --color-text: var(--ghp-gray-800);
+  --color-text-light: var(--ghp-gray-600);
+  --color-border: var(--ghp-gray-300);
+}
+
+/* Legacy class support */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.input-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  color: var(--ghp-gray-700);
+  font-size: 0.875rem;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ghp-gray-300);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-family: var(--font-system);
+  color: var(--ghp-gray-900);
+  background: white;
+  transition: all var(--transition-fast);
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: var(--ghp-green-primary);
+  box-shadow: 0 0 0 3px rgba(82, 176, 67, 0.1);
+}
+
+.input-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.input-group .helper-text {
+  font-size: 0.75rem;
+  color: var(--ghp-gray-600);
+  margin-top: var(--spacing-xs);
+}
+
+.input-group .error-text {
+  font-size: 0.75rem;
+  color: var(--ghp-error);
+  margin-top: var(--spacing-xs);
+}
+
+/* Legacy badge classes */
+.badge-success { 
+  background-color: var(--ghp-green-lighter); 
+  color: var(--ghp-green-dark); 
+}
+
+.badge-warning { 
+  background-color: #FFF3E0; 
+  color: #e65100; 
+}
+
+.badge-error { 
+  background-color: #FFEBEE; 
+  color: #c62828; 
+}
+
+.badge-info { 
+  background-color: var(--ghp-blue-light); 
+  color: #1565c0; 
+}
+

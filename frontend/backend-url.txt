@@ -1,0 +1,10 @@
+BACKEND_URL_PLACEHOLDER
+
+Esta URL será reemplazada cuando tengas el backend desplegado en Railway.
+
+Instrucciones:
+1. Despliega el backend en Railway
+2. Obtén la URL del backend (ejemplo: https://soporte-backend-ghp-production.up.railway.app)
+3. Cuando despliegues en Vercel, usa esta variable de entorno:
+   VITE_API_URL=https://tu-backend-url.up.railway.app/api
+
