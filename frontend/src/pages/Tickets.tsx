@@ -142,14 +142,24 @@ const Tickets: React.FC = () => {
 
       const response = await apiService.getTickets(params);
       console.log('Tickets response:', response); // Debug log
-      if (response && Array.isArray(response.tickets)) {
+      
+      if (Array.isArray(response)) {
+        // Handle direct array response (no pagination metadata)
+        setTickets(response);
+        setPagination(prev => ({
+          ...prev,
+          total: response.length,
+          pages: 1
+        }));
+      } else if (response && Array.isArray(response.tickets)) {
+        // Handle paginated response
         setTickets(response.tickets);
+        if (response.pagination) {
+          setPagination(response.pagination);
+        }
       } else {
         console.warn('Respuesta de tickets inválida:', response);
         setTickets([]);
-      }
-      if (response && response.pagination) {
-        setPagination(response.pagination);
       }
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al cargar tickets');
