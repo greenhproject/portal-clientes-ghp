@@ -60,12 +60,29 @@ const Dashboard: React.FC = () => {
     try {
       setLoading(true);
       const [statsData, ticketsData] = await Promise.all([
-        apiService.getDashboardStats().catch(() => ({})),
-        apiService.getTickets({ page: 1, per_page: 10 }).catch(() => ({ tickets: [] })),
+        apiService.getDashboardStats().catch((err) => {
+          console.error('Error fetching stats:', err);
+          return {};
+        }),
+        apiService.getTickets({ page: 1, per_page: 10 }).catch((err) => {
+          console.error('Error fetching tickets:', err);
+          return { tickets: [] };
+        }),
       ]);
       
+      console.log('Dashboard Stats:', statsData);
+      console.log('Dashboard Tickets:', ticketsData);
+
       setStats(statsData);
-      setTickets(ticketsData.tickets || []);
+      // Handle both array response and paginated response format
+      if (Array.isArray(ticketsData)) {
+        setTickets(ticketsData);
+      } else if (ticketsData && Array.isArray(ticketsData.tickets)) {
+        setTickets(ticketsData.tickets);
+      } else {
+        console.warn('Unexpected tickets data format:', ticketsData);
+        setTickets([]);
+      }
       setError('');
     } catch (err: any) {
       setError('Error al cargar datos del dashboard');
